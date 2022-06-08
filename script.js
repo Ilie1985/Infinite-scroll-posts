@@ -5,7 +5,7 @@ const loading = document.querySelector(".loader");
 const filter = document.getElementById("filter");
 
 //set up global variables
-let limit = 3;
+let limit = 4;
 let page = 1;
 //=====================================================
 
@@ -42,3 +42,41 @@ const showPosts = async () => {
 };
 showPosts();
 //==================================================================
+
+// showLoading FUNCTIONALITY
+
+//add the class of show on the the loader element
+//use setTimeout to make the loading dost dissapear after a certain amount of time which takes in a function and the time
+//remove the class of show
+//increment the page by 1 and call showPosts
+//fetch the rest of the data
+
+const showLoading = () => {
+  loading.classList.add("show");
+  setTimeout(() => {
+    loading.classList.remove("show");
+
+    setTimeout(() => {
+      page++;
+      showPosts();
+    }, 300);
+  }, 1000);
+};
+
+
+//==================================================================
+//Event listeners
+
+//add event listener on window which takes in an "scroll" event list. and a calback function
+//pull out(destructure) the properties from the document.documentElement object
+//create an if statement to adjust when and where to load new content on the page
+//show the loader and fetche the rest of the post (invoke showLoading)
+
+window.addEventListener("scroll", () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    showLoading();
+  }
+});
+//==========================================================================
