@@ -62,9 +62,38 @@ const showLoading = () => {
     }, 300);
   }, 1000);
 };
-
-
 //==================================================================
+
+//filterPosts FUNCTIONSLITY
+
+//pass in e parameter so that i can get what is typed
+//capture e.target.value in a variable
+//add toUppercase because its is going to be case sensitive when match it
+//save all elements with the class of post in a variable to have access to the nodeList which is an array
+//loop through each posts and get the innerText of the title and the body, save them in variables
+//match it to the term (what i type)
+//indexOf > - 1 means its a match in the title
+//if there is a match set post.style.display ="flex"
+//else set post.style.display ="none" so it doesnt show
+
+const filterPosts = (e) => {
+  const term = e.target.value.toUpperCase();
+  const posts = document.querySelectorAll(".post");
+
+  posts.forEach((post) => {
+    const title = post.querySelector(".post-title").innerText.toUpperCase();
+    const body = post.querySelector(".post-body").innerText.toUpperCase();
+
+    if (title.indexOf(term) > -1 || body.indexOf(term) > -1) {
+      post.style.display = "flex";
+    } else {
+      post.style.display = "none";
+    }
+  });
+};
+
+//==============================================================
+
 //Event listeners
 
 //add event listener on window which takes in an "scroll" event list. and a calback function
@@ -79,4 +108,9 @@ window.addEventListener("scroll", () => {
     showLoading();
   }
 });
+
+//add an input event list. and invoke filterPosts
+
+filter.addEventListener("input", filterPosts);
+
 //==========================================================================
